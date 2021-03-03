@@ -10,14 +10,17 @@ def getRotationMatrix(axis, theta):
         return np.array(((np.cos(theta), -np.sin(theta), 0), (np.sin(theta), np.cos(theta), 0), (0, 0, 1)))
     raise Exception("invalid axis")
 
-def getTransformedPoint(axis, point, theta, translation):
-    axis = axis.lower()
-    if not (axis == 'x' or axis == 'y' or axis == 'z'):
-        print("invalid axis")
-        return
+def getTransformedPoint(all_axises, point, thetas, translation):
+    rMatrix = np.array(((1, 0, 0), (0, 1, 0), (0, 0, 1)))
+    for i in range(len(all_axises)):
+        axis = all_axises[i].lower()
+        if not (axis == 'x' or axis == 'y' or axis == 'z'):
+            print("invalid axis")
+            return
 
-    RMatix = getRotationMatrix(axis, theta)
-    translationMatrix = np.concatenate((RMatix, np.transpose(translation).reshape((3, 1))), axis=1)
+        tempRMatrix = getRotationMatrix(axis, thetas[i])
+        rMatrix = np.matmul(rMatrix, tempRMatrix)
+    translationMatrix = np.concatenate((rMatrix, np.transpose(translation).reshape((3, 1))), axis=1)
     translationMatrix = np.concatenate((translationMatrix, [(0, 0, 0, 1)]), axis=0)
     point = np.concatenate((point, [1]), axis=0).reshape(4, 1)
     # print(translationMatrix)
@@ -27,9 +30,12 @@ def getTransformedPoint(axis, point, theta, translation):
 
 
 
-
-axis = input("enter rotation of frame abt axis(x/y/z): ")
-theta = float(input("enter rotation degree in anticlockwise direction: "))
+total = int(input("enter total number of successive rotations: "))
+axis = []
+theta = []
+for i in range(total):
+    axis.append(input("enter rotation of frame abt axis(x/y/z): "))
+    theta.append(float(input("enter rotation degree in anticlockwise direction: ")))
 translation = np.array(input("enter translation vector: ").strip().split(), float)
 point = np.array(input("enter point in current frame: ").strip().split(), float)
 res = getTransformedPoint(axis, point, theta, translation)
