@@ -4,7 +4,7 @@ Roll No: 2019BCS-072
 
 This repository consists of assignments for introduction to robotics subject.
 
-## Assign 3:-
+## Assign PUMA 560 Forward Kinematics:-
 ```
 Enter a2, a3, d3, d4 values respectively: 10 20 0 30
 Enter 6 angles values: -90 0 30 90 15 60
@@ -12,7 +12,7 @@ Enter end effector coord: 0 0 1
 final coord:  [-27.48467754 -13.4120739  -24.32632923]
 ```
 
-## Assign 2:-
+## Assign Translation of Coordinates:-
 
 ```
 enter total number of successive rotations: 3
